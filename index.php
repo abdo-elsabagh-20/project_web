@@ -191,27 +191,27 @@ $link->close();
 
     <!-- Login Form -->
     <form id="login-form" method="post" action="">
-      <p class="form-title">تسجيل الدخول</p>
+      <p class="form-title">Sign In</p>
       <div class="form-group">
-        <input type="email" name="signin_email" placeholder="البريد الإلكتروني" required>
+        <input type="email" name="signin_email" placeholder="Your Email" required>
       </div>
       <div class="form-group">
-        <input type="password" name="signin_password" placeholder="كلمة المرور" required>
+        <input type="password" name="signin_password" placeholder="Your Password" required>
       </div>
       <button type="submit" class="submit-btn">Login</button>
     </form>
 
     <!-- Sign Up Form -->
     <form id="signup-form" class="hidden" method="post" action="">
-      <p class="form-title">إنشاء حساب</p>
+      <p class="form-title">Create Account</p>
       <div class="form-group">
-        <input type="text" name="fullname" placeholder="الاسم الكامل" required />
+        <input type="text" name="fullname" placeholder="Full Name" required />
       </div>
       <div class="form-group">
-        <input type="email" name="email" placeholder="البريد الإلكتروني" required />
+        <input type="email" name="email" placeholder="Email" required />
       </div>
       <div class="form-group">
-        <input type="password" name="password" placeholder="كلمة المرور" required />
+        <input type="password" name="password" placeholder="Password" required />
       </div>
       <button type="submit" class="submit-btn">Sign Up</button>
     </form>
