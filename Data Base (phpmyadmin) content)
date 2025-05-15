@@ -1,0 +1,9 @@
+Data Base Name: project_web
+Table Name: users 
+Rows In Table (users)
+{
+id INT a_c primary key
+fullname VARCHAR(249) 
+email VARCHAR(50) 
+password VARCHAR(50) 
+}
