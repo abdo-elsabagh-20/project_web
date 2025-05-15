@@ -1,27 +1,25 @@
 <?php
-// بداية ملف index.php
 
-// استدعاء ملف الاتصال
 include "connection.php";
 
 session_start();
 
 $message = "";
 
-// تحقق وجود اتصال صحيح قبل المتابعة
+
 if (!$link) {
-  die("فشل الاتصال بقاعدة البيانات.");
+  die("Error Connecting With Data Base.");
 }
 
-// تسجيل الدخول
+// Sign In
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['signin_email'])) {
   $email = $_POST['signin_email'];
   $password = $_POST['signin_password'];
 
-  // تحضير استعلام التحقق من المستخدم
+  
   $stmt = $link->prepare("SELECT * FROM users WHERE email = ? AND password = ?");
   if ($stmt === false) {
-    die("خطأ في تحضير الاستعلام: " . $link->error);
+    die("Error: " . $link->error);
   }
 
   $stmt->bind_param("ss", $email, $password);
@@ -33,39 +31,39 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['signin_email'])) {
     header("Location: home.php");
     exit();
   } else {
-    $message = "خطأ: البريد الإلكتروني أو كلمة المرور غير صحيحة!";
+    $message = "Email Or password Is Incorrect!";
   }
 
   $stmt->close();
 }
 
-// تسجيل مستخدم جديد
+// Sign Up
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['fullname'])) {
   $fullname = $_POST['fullname'];
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  // تحقق من وجود البريد مسبقًا
+  // Check User
   $check = $link->prepare("SELECT * FROM users WHERE email = ?");
   if ($check === false) {
-    die("خطأ في تحضير استعلام التحقق: " . $link->error);
+    die("Error: " . $link->error);
   }
   $check->bind_param("s", $email);
   $check->execute();
   $checkResult = $check->get_result();
 
   if ($checkResult && $checkResult->num_rows > 0) {
-    $message = "الإيميل مستخدم من قبل!";
+    $message = "This Email Is Alredy Exist!";
   } else {
     $stmt = $link->prepare("INSERT INTO users (fullname, email, password) VALUES (?, ?, ?)");
     if ($stmt === false) {
-      die("خطأ في تحضير استعلام الإدخال: " . $link->error);
+      die("Error: " . $link->error);
     }
     $stmt->bind_param("sss", $fullname, $email, $password);
     if ($stmt->execute()) {
-      $message = "تم إنشاء الحساب بنجاح! يمكنك تسجيل الدخول الآن.";
+      $message = "Account Is Successfully Created! You Can Sign In Now.";
     } else {
-      $message = "حدث خطأ أثناء إنشاء الحساب.";
+      $message = "Error With Creating Your Account.";
     }
     $stmt->close();
   }
@@ -73,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['fullname'])) {
   $check->close();
 }
 
-// إغلاق الاتصال
+// Close Conn
 $link->close();
 ?>
 
